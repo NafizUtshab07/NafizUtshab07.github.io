@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nafiz Al Mahmud — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #080C10;
+    --surface: #0E1319;
+    --surface2: #141A22;
+    --border: rgba(255,255,255,0.07);
+    --border-accent: rgba(0,210,180,0.25);
+    --accent: #00D2B4;
+    --accent2: #4F8EF7;
+    --text: #E8EDF2;
+    --text-muted: #7A8A9A;
+    --text-dim: #4A5A6A;
+    --heading-font: 'Syne', sans-serif;
+    --body-font: 'DM Sans', sans-serif;
+    --gold: #E8B84B;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body-font);
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(8,12,16,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+  }
+  .nav-logo {
+    font-family: var(--heading-font);
+    font-weight: 800; font-size: 18px;
+    letter-spacing: -0.5px;
+    color: var(--text);
+  }
+  .nav-logo span { color: var(--accent); }
+  nav ul { list-style: none; display: flex; gap: 2rem; }
+  nav ul li a {
+    font-size: 13px; font-weight: 500; letter-spacing: 0.04em;
+    color: var(--text-muted); text-transform: uppercase; text-decoration: none;
+    transition: color 0.2s;
+  }
+  nav ul li a:hover { color: var(--accent); }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 980px; margin: 0 auto; padding: 0 2rem; }
+
+  section { padding: 80px 0; }
+  section + section { border-top: 1px solid var(--border); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding-top: 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(0,210,180,0.08);
+    border: 1px solid rgba(0,210,180,0.2);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 12px; font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.06em; text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .hero-badge::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+  h1.hero-name {
+    font-family: var(--heading-font);
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+  h1.hero-name .accent { color: var(--accent); }
+  .hero-role {
+    font-size: 18px; font-weight: 300; color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.02em;
+  }
+  .hero-summary {
+    font-size: 15px; color: var(--text-muted); line-height: 1.8;
+    margin-bottom: 2rem;
+    max-width: 460px;
+  }
+  .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 22px;
+    border-radius: 8px;
+    font-size: 14px; font-weight: 500;
+    cursor: pointer; transition: all 0.2s; text-decoration: none;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #080C10;
+    border: 1px solid var(--accent);
+  }
+  .btn-primary:hover { background: #00eece; border-color: #00eece; text-decoration: none; color: #080C10; }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+
+  .hero-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .stat-card:first-child { border-color: rgba(0,210,180,0.2); }
+  .stat-num {
+    font-family: var(--heading-font);
+    font-size: 36px; font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-num .unit { color: var(--accent); font-size: 24px; }
+  .stat-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stat-card.gold .stat-num .unit { color: var(--gold); }
+
+  /* ── CONTACT STRIP ── */
+  .contact-strip {
+    display: flex; gap: 1.5rem; flex-wrap: wrap;
+    margin-top: 2rem;
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--border);
+  }
+  .contact-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--text-muted);
+  }
+  .contact-icon { font-size: 16px; }
+
+  /* ── SECTION HEADERS ── */
+  .section-label {
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600; margin-bottom: 8px;
+  }
+  h2.section-title {
+    font-family: var(--heading-font);
+    font-size: 32px; font-weight: 800;
+    letter-spacing: -0.8px;
+    line-height: 1.1;
+    margin-bottom: 2.5rem;
+    color: var(--text);
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 16px;
+  }
+  .skill-group {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .skill-group-title {
+    font-size: 12px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--accent); margin-bottom: 14px;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 12px; color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .tag.highlight {
+    background: rgba(0,210,180,0.06);
+    border-color: rgba(0,210,180,0.18);
+    color: var(--accent);
+  }
+
+  /* ── EXPERIENCE ── */
+  .experience-list { display: flex; flex-direction: column; gap: 0; }
+  .exp-item {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-meta { padding-top: 4px; }
+  .exp-period {
+    font-size: 12px; color: var(--text-dim);
+    letter-spacing: 0.04em; margin-bottom: 6px;
+  }
+  .exp-company {
+    font-family: var(--heading-font);
+    font-size: 14px; font-weight: 700;
+    color: var(--text); margin-bottom: 4px;
+  }
+  .exp-type {
+    font-size: 11px; color: var(--accent); font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .exp-role {
+    font-family: var(--heading-font);
+    font-size: 20px; font-weight: 700;
+    color: var(--text); margin-bottom: 10px;
+    letter-spacing: -0.3px;
+  }
+  .exp-desc { font-size: 14px; color: var(--text-muted); line-height: 1.8; margin-bottom: 14px; }
+  .exp-bullets { list-style: none; margin-bottom: 14px; }
+  .exp-bullets li {
+    font-size: 13.5px; color: var(--text-muted);
+    padding: 4px 0 4px 18px;
+    position: relative; line-height: 1.7;
+  }
+  .exp-bullets li::before {
+    content: '▸';
+    position: absolute; left: 0;
+    color: var(--accent); font-size: 11px; top: 7px;
+  }
+  .exp-projects { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+
+  /* ── PROJECTS ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    transition: border-color 0.25s, transform 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--accent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .project-card:hover::before { transform: scaleX(1); }
+  .project-card:hover { border-color: rgba(0,210,180,0.25); transform: translateY(-2px); }
+  .project-icon {
+    width: 40px; height: 40px;
+    background: rgba(0,210,180,0.08);
+    border: 1px solid rgba(0,210,180,0.15);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px;
+    font-size: 18px; color: var(--accent);
+  }
+  .project-name {
+    font-family: var(--heading-font);
+    font-size: 17px; font-weight: 700;
+    color: var(--text); margin-bottom: 8px;
+    letter-spacing: -0.2px;
+  }
+  .project-desc {
+    font-size: 13px; color: var(--text-muted);
+    line-height: 1.7; margin-bottom: 16px;
+  }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .p-tag {
+    font-size: 11px; font-weight: 500;
+    padding: 3px 8px; border-radius: 5px;
+    background: rgba(79,142,247,0.08);
+    border: 1px solid rgba(79,142,247,0.18);
+    color: var(--accent2); text-transform: uppercase; letter-spacing: 0.05em;
+  }
+
+  /* ── AGILE SECTION ── */
+  .agile-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+  }
+  .agile-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; color: var(--text-muted);
+  }
+  .agile-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+  /* ── EDUCATION ── */
+  .edu-list { display: flex; flex-direction: column; gap: 16px; }
+  .edu-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: grid; grid-template-columns: 1fr auto;
+    align-items: start; gap: 1rem;
+  }
+  .edu-school {
+    font-family: var(--heading-font);
+    font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 4px;
+  }
+  .edu-degree { font-size: 13px; color: var(--text-muted); }
+  .edu-badge {
+    font-size: 12px; font-weight: 600;
+    padding: 4px 10px; border-radius: 6px;
+    background: rgba(232,184,75,0.1);
+    border: 1px solid rgba(232,184,75,0.25);
+    color: var(--gold); white-space: nowrap;
+  }
+
+  /* ── OBJECTIVE ── */
+  .objective-box {
+    background: var(--surface);
+    border: 1px solid rgba(0,210,180,0.15);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    padding: 28px 32px;
+  }
+  .objective-box p {
+    font-size: 16px; color: var(--text-muted);
+    line-height: 1.9; font-weight: 300; font-style: italic;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    text-align: center;
+  }
+  .footer-name {
+    font-family: var(--heading-font);
+    font-size: 22px; font-weight: 800;
+    color: var(--text); margin-bottom: 8px;
+  }
+  .footer-tagline { font-size: 13px; color: var(--text-dim); margin-bottom: 20px; }
+  .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 24px; }
+  .footer-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-copy { font-size: 12px; color: var(--text-dim); }
+
+  /* ── BG GRID DECORATION ── */
+  #hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,210,180,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,210,180,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  @media (max-width: 680px) {
+    nav ul { display: none; }
+    .hero-grid { grid-template-columns: 1fr; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    h1.hero-name { font-size: 36px; }
+  }
+
+  @media print {
+    nav { display: none; }
+    #hero { min-height: auto; padding-top: 2rem; }
+    .hero-grid { grid-template-columns: 1fr; }
+    section { padding: 40px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">N<span>.</span>Nafiz</div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="about">
+  <div class="container" style="padding-top: 56px;">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-badge">Available for Opportunities</div>
+        <h1 class="hero-name">Md. Nafiz<br>Al <span class="accent">Mahmud</span></h1>
+        <p class="hero-role">Project Coordinator · Business Analyst · Aspiring PM</p>
+        <p class="hero-summary">
+          Results-driven Project Coordinator with a B.Sc. in Computer Science &amp; Engineering. Experienced in managing full-lifecycle software and mobile application projects across Agile environments — bridging technical teams and business stakeholders to deliver real outcomes.
+        </p>
+        <div class="hero-cta">
+          <a href="mailto:nafizutshab520@gmail.com" class="btn btn-primary">✉ Contact Me</a>
+          <a href="#projects" class="btn btn-ghost">View Projects →</a>
+        </div>
+        <div class="contact-strip">
+          <div class="contact-item">
+            <span class="contact-icon">📍</span>
+            <span>Bashundhara R/A, Dhaka, Bangladesh</span>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📧</span>
+            <a href="mailto:nafizutshab520@gmail.com">nafizutshab520@gmail.com</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📞</span>
+            <span>+880 1309078310</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="hero-stats">
+          <div class="stat-card">
+            <div class="stat-num">2<span class="unit">+</span></div>
+            <div class="stat-label">Years of Experience</div>
+          </div>
+          <div class="stat-card gold">
+            <div class="stat-num">20<span class="unit" style="color:var(--gold)">+</span></div>
+            <div class="stat-label">Team Members Led</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">8<span class="unit">+</span></div>
+            <div class="stat-label">Projects Delivered</div>
+          </div>
+          <div class="stat-card" style="border-color:rgba(79,142,247,0.2);">
+            <div class="stat-num" style="font-size:28px; color: var(--accent2)">B.Sc.</div>
+            <div class="stat-label">Computer Science &amp; Eng.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <p class="section-label">Core Competencies</p>
+    <h2 class="section-title">Skills &amp; Toolkit</h2>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-title">Project Management</div>
+        <div class="skill-tags">
+          <span class="tag highlight">Agile / Scrum</span>
+          <span class="tag highlight">Sprint Planning</span>
+          <span class="tag">Lifecycle Management</span>
+          <span class="tag">Resource Management</span>
+          <span class="tag">Risk &amp; Issue Mgmt</span>
+          <span class="tag">Release Planning</span>
+          <span class="tag">Stakeholder Management</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Business Analysis</div>
+        <div class="skill-tags">
+          <span class="tag highlight">BRD Preparation</span>
+          <span class="tag highlight">Requirement Gathering</span>
+          <span class="tag">User Stories</span>
+          <span class="tag">Acceptance Criteria</span>
+          <span class="tag">Process Mapping</span>
+          <span class="tag">Functional Documentation</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Product Management</div>
+        <div class="skill-tags">
+          <span class="tag highlight">Backlog Management</span>
+          <span class="tag highlight">Feature Prioritization</span>
+          <span class="tag">Product Roadmap</span>
+          <span class="tag">User Journey Mapping</span>
+          <span class="tag">Market Research</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Tools &amp; Technologies</div>
+        <div class="skill-tags">
+          <span class="tag highlight">Jira</span>
+          <span class="tag highlight">Confluence</span>
+          <span class="tag">ClickUp</span>
+          <span class="tag">Trello</span>
+          <span class="tag">Notion</span>
+          <span class="tag">Slack</span>
+          <span class="tag">Python / Django</span>
+          <span class="tag">REST APIs</span>
+          <span class="tag">SQL</span>
+          <span class="tag">AutoCAD</span>
+          <span class="tag">Google Workspace</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <p class="section-label">Work History</p>
+    <h2 class="section-title">Professional Experience</h2>
+    <div class="experience-list">
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-period">Dec 2025 — Present</div>
+          <div class="exp-company">TechnoNext Software Ltd</div>
+          <div class="exp-type">Full-Time</div>
+        </div>
+        <div>
+          <div class="exp-role">Project Coordinator</div>
+          <p class="exp-desc">Leading multiple software and mobile application projects, coordinating a cross-functional team of 15 developers and 5 designers across the full project lifecycle.</p>
+          <ul class="exp-bullets">
+            <li>Lead project planning, execution, monitoring, and delivery activities end-to-end.</li>
+            <li>Prepare BRDs, user stories, feature specifications, and comprehensive project documentation.</li>
+            <li>Facilitate Agile ceremonies: sprint planning, daily standups, sprint reviews, and retrospectives.</li>
+            <li>Manage stakeholder communications and provide regular project status updates.</li>
+            <li>Track timelines, deliverables, risks, and dependencies while ensuring business-technical alignment.</li>
+          </ul>
+          <div class="exp-projects">
+            <span class="tag">eSIM Application</span>
+            <span class="tag">TrackFlow</span>
+            <span class="tag">FileVault</span>
+            <span class="tag">VPN Solutions</span>
+            <span class="tag">HajiTalk</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-period">Sept 2024 — Dec 2025</div>
+          <div class="exp-company">ARA Technologies</div>
+          <div class="exp-type">Contract</div>
+        </div>
+        <div>
+          <div class="exp-role">Project Coordinator</div>
+          <p class="exp-desc">Coordinated multidisciplinary teams on engineering and infrastructure projects, leveraging Jira, Confluence, and Google Earth Pro for enterprise-level project tracking.</p>
+          <ul class="exp-bullets">
+            <li>Utilized Jira for timeline tracking and Google Earth Pro for site evaluations for NESCO.</li>
+            <li>Managed AutoCAD schematics and technical documentation for DDPC projects.</li>
+            <li>Implemented cloud-based documentation practices to support operational and field teams.</li>
+            <li>Improved cross-team collaboration between technical and operational departments.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-period">Jun 2024 — Sept 2024</div>
+          <div class="exp-company">Astrotech Technologies</div>
+          <div class="exp-type">Full-Time</div>
+        </div>
+        <div>
+          <div class="exp-role">Junior Backend Developer</div>
+          <p class="exp-desc">Built and maintained backend systems, developed APIs, and assisted in modernizing legacy infrastructure using Python and Django.</p>
+          <ul class="exp-bullets">
+            <li>Developed and maintained RESTful APIs and database operations using Python, Django &amp; MySQL.</li>
+            <li>Implemented authentication systems and assisted in migration from legacy frameworks.</li>
+            <li>Collaborated with teams to improve application scalability and performance.</li>
+          </ul>
+          <div class="exp-projects">
+            <span class="tag">Python</span>
+            <span class="tag">Django</span>
+            <span class="tag">REST API</span>
+            <span class="tag">MySQL</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-period">Mar 2024 — Jun 2024</div>
+          <div class="exp-company">Ministry of Defence – Survey of Bangladesh</div>
+          <div class="exp-type">Internship</div>
+        </div>
+        <div>
+          <div class="exp-role">Programmer Intern (NSDD)</div>
+          <p class="exp-desc">Contributed to critical national-level data management and infrastructure mapping projects at the Survey of Bangladesh.</p>
+          <ul class="exp-bullets">
+            <li>Supported data management and debugging on national infrastructure projects.</li>
+            <li>Integrated frontend and backend systems in collaboration with internal teams.</li>
+            <li>Participated in mapping projects and software testing &amp; maintenance activities.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <p class="section-label">Project Portfolio</p>
+    <h2 class="section-title">Notable Projects</h2>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-icon">📱</div>
+        <div class="project-name">eSIM Mobile Application</div>
+        <p class="project-desc">International eSIM platform enabling users to purchase and activate mobile data plans globally — full BRD to release coordination.</p>
+        <div class="project-tags">
+          <span class="p-tag">BRD</span>
+          <span class="p-tag">Sprint Mgmt</span>
+          <span class="p-tag">Release</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">⚡</div>
+        <div class="project-name">TrackFlow</div>
+        <p class="project-desc">Workflow and task management platform designed to streamline team productivity and project visibility across large cross-functional teams.</p>
+        <div class="project-tags">
+          <span class="p-tag">Agile</span>
+          <span class="p-tag">Backlog</span>
+          <span class="p-tag">Scheduling</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">🔐</div>
+        <div class="project-name">FileVault</div>
+        <p class="project-desc">Secure file storage and management application focused on privacy and accessibility, with end-to-end UAT coordination and feature documentation.</p>
+        <div class="project-tags">
+          <span class="p-tag">Feature Docs</span>
+          <span class="p-tag">UAT</span>
+          <span class="p-tag">Sprint</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">🔒</div>
+        <div class="project-name">NexVPN</div>
+        <p class="project-desc">VPN solution for secure internet access and online privacy. Managed requirements analysis, team coordination, documentation, and reporting.</p>
+        <div class="project-tags">
+          <span class="p-tag">Requirements</span>
+          <span class="p-tag">Coordination</span>
+          <span class="p-tag">Docs</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">💬</div>
+        <div class="project-name">HajiTalk</div>
+        <p class="project-desc">Communication and community engagement platform with messaging, group discussions, announcements, and real-time features. Full SDLC coordination.</p>
+        <div class="project-tags">
+          <span class="p-tag">BRD</span>
+          <span class="p-tag">Sprint Reports</span>
+          <span class="p-tag">Release Notes</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">🍱</div>
+        <div class="project-name">Next Lunch</div>
+        <p class="project-desc">Food ordering and meal management platform for browsing menus, scheduling deliveries, and managing lunch plans for individuals and organizations.</p>
+        <div class="project-tags">
+          <span class="p-tag">Product Specs</span>
+          <span class="p-tag">User Flows</span>
+          <span class="p-tag">Agile</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">📄</div>
+        <div class="project-name">EziScan</div>
+        <p class="project-desc">Mobile document scanning and digitization application. Handled documentation preparation, feature coordination, QA collaboration, and release support.</p>
+        <div class="project-tags">
+          <span class="p-tag">QA Collab</span>
+          <span class="p-tag">Feature Coord</span>
+          <span class="p-tag">Release</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- AGILE -->
+<section>
+  <div class="container">
+    <p class="section-label">Methodology</p>
+    <h2 class="section-title">Agile &amp; Scrum Expertise</h2>
+    <div class="agile-grid">
+      <div class="agile-item"><div class="agile-dot"></div>Sprint Planning</div>
+      <div class="agile-item"><div class="agile-dot"></div>Daily Standups</div>
+      <div class="agile-item"><div class="agile-dot"></div>Sprint Reviews</div>
+      <div class="agile-item"><div class="agile-dot"></div>Retrospectives</div>
+      <div class="agile-item"><div class="agile-dot"></div>Backlog Grooming</div>
+      <div class="agile-item"><div class="agile-dot"></div>User Story Creation</div>
+      <div class="agile-item"><div class="agile-dot"></div>Release Planning</div>
+      <div class="agile-item"><div class="agile-dot"></div>Roadmap Discussions</div>
+      <div class="agile-item"><div class="agile-dot"></div>Risk Tracking</div>
+      <div class="agile-item"><div class="agile-dot"></div>Velocity Monitoring</div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container">
+    <p class="section-label">Academic Background</p>
+    <h2 class="section-title">Education</h2>
+    <div class="edu-list">
+      <div class="edu-item">
+        <div>
+          <div class="edu-school">North South University</div>
+          <div class="edu-degree">Bachelor of Science in Computer Science &amp; Engineering · 2020 – 2024</div>
+        </div>
+        <div class="edu-badge">B.Sc. CSE</div>
+      </div>
+      <div class="edu-item">
+        <div>
+          <div class="edu-school">Higher Secondary Certificate (HSC)</div>
+          <div class="edu-degree">Rajshahi Board</div>
+        </div>
+        <div class="edu-badge">GPA 5.00</div>
+      </div>
+      <div class="edu-item">
+        <div>
+          <div class="edu-school">Secondary School Certificate (SSC)</div>
+          <div class="edu-degree">Rajshahi Board</div>
+        </div>
+        <div class="edu-badge">GPA 5.00</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OBJECTIVE -->
+<section>
+  <div class="container">
+    <p class="section-label">Career Objective</p>
+    <h2 class="section-title">What I'm Building Towards</h2>
+    <div class="objective-box">
+      <p>
+        To leverage my technical background, project coordination expertise, and business analysis skills to advance into Product Management and Project Management leadership roles — building innovative software products, optimizing development processes, and delivering measurable business value through effective collaboration and strategic thinking.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER / CONTACT -->
+<footer id="contact">
+  <div class="container">
+    <div class="footer-name">Md. Nafiz Al Mahmud</div>
+    <div class="footer-tagline">Project Coordinator · Business Analyst · Aspiring Product Manager</div>
+    <div class="footer-links">
+      <a href="mailto:nafizutshab520@gmail.com">nafizutshab520@gmail.com</a>
+      <a href="tel:+8801309078310">+880 1309078310</a>
+      <span style="color:var(--text-dim)">Dhaka, Bangladesh</span>
+    </div>
+    <div class="footer-copy">© 2025 Md. Nafiz Al Mahmud · Built for career applications</div>
+  </div>
+</footer>
+
+</body>
+</html>
